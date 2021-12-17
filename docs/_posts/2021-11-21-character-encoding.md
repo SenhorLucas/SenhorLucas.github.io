@@ -3,7 +3,8 @@ layout: post
 title:  "Character encodings: ASCII, UTF-8, Unicode and what is Latin-1?"
 date:   2021-11-03 16:36:48 +0100
 categories: encoding engineering computer-science
---
+---
+
 What is Unicode, why is it used everywhere, and what are the options?
 
 We, software developers need to use string data types pretty much daily and
