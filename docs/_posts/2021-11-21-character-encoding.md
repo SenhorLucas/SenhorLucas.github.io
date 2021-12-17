@@ -33,9 +33,9 @@ which is plenty enough for the entire latin alphabet. The cool part is that in
 spite of being binary in nature, it was created in 1824, way before the first
 electronic digital calculators were brought to life during World War II.
 
-For example,
-⠁⠃⠉ → abc
-⠅⠇⠍ → klm
+For example:
+- ⠁⠃⠉ → abc
+- ⠅⠇⠍ → klm
 
 
 ## Character encoding in computer engineering
@@ -80,7 +80,7 @@ binary representation of the character number **is** the encoding.
 
 <summary>ASCII table
   <details>
-
+```text
  Dec  | Char                           | Dec  | Char  | Dec  | Char | Dec  | Char
 ------|--------------------------------|------|-------|------|------|------|-----
   0   | NUL (null)                     |  32  | SPACE |  64  | @    |  96  | `
@@ -115,6 +115,7 @@ binary representation of the character number **is** the encoding.
  29   | GS  (group separator)          |  61  | =     |  93  | ]    | 125  | }
  30   | RS  (record separator)         |  62  | >     |  94  | ^    | 126  | ~
  31   | US  (unit separator)           |  63  | ?     |  95  | _    | 127  | DEL
+```
 
   </details>
 </summary>
@@ -179,15 +180,15 @@ How about collecting, categorizing and indexing all characters from all human
 languages is a way that everyone uses only one encoding? Screw this 256 limit
 and give every human character a number, for example:
 
-- a → 97
-- b → 97
-- A → 41
-- B → 42
+- a → decimal 97 ≡ U+61 (hexadecimal notation, much more usual.)
+- b → decimal 98 ≡ U+62
+- A → decimal 41 ≡ U+29
+- B → decimal 42 ≡ U+2A
 
-- γ → 947
-- Γ → 915
+- γ → decimal 947 ≡ U+3B3
+- Γ → decimal 915 ≡ U+393
 
-- 爱 → 24859
+- 爱 → code point decimal 24859 ≡ U+611b
 
 and so on. Just list them all!
 
