@@ -49,3 +49,22 @@ HEAD ---> branch_name ---> ad6    ----> f89   ----+
 ### Branch
 ### HEAD
 
+
+## Git revisions (`man gitrevisions`)
+
+* <sha1>
+* <describeOutput> <tag>-123-g<abbrev-sha1>
+* <refname>: master, refs/heads/master
+* TODO: all refs with @
+* <ref>^, <ref>~<n>
+* TODO...
+*
+origin..HEAD
+
+## Commands
+
+`git log -L '<start>,<end>:<file>'`
+`git log -L ':<funcname>:<file>'` Still a bit cryptic, find examples
+
+`git log -L '4,12:path/to/file'`
+`git log -L '/content of line/,+1:path/to/file'`
