@@ -1,5 +1,4 @@
 ---
-layout: post
 title:  "Character encodings: ASCII, UTF-8, Unicode and what is Latin-1?"
 date:   2021-11-03 16:36:48 +0100
 categories: encoding engineering computer-science
@@ -245,143 +244,6 @@ find a practical example of this, so I'll stop spending time on it now and
 hope someone reading this will send me a nifty example 😁. Moving on…
 
 
-## UTF-8
-
-If simply converting a code point to binary isn't smart, then we need something
-better.
-
-Note: code points are spoken of in hexadecimal instead of decimal, so from now
-on, instead of 127, we will say `0x7F`. Same same.
-
-The trick of UTF-8 is to separate the character table from the encoding. It is
-no longer simple to convert the binary encoding into a code point number and
-vice-versa.
-
-Here is how it works:
-
-From `0x0` to `0x7F`, do the simple thing: convert to binary. This results in bytes
-with the most significant bit always zeroed.
-
-The number `0x0` in binary is:
-```text
-bit   | 0123457 |
-value | 0000000 |
-```
-
-And the number `0x7F` (127, remember?) in binary is
-```text
-      | Byte 1  |
-bit   | 0123457 |
-value | 0111111 |
-```
-
-So Unicode decoders see a character byte starting with `0`, it already knows that
-this is a single byte character: job done, next character.
-
-As soon as the most significant bit turns into 1, we switch modes: we have a
-multi-byte characters:
-
-```text
-       | Byte 1   | Byte 2   | Byte 3   | Byte 4   |
--------|----------|----------|----------|----------|
-0x80   | 110xxxxx | 10xxxxxx |
-0x800  | 1110xxxx | 10xxxxxx | 10xxxxxx |
-0x1000 | 11110xxx | 10xxxxxx | 10xxxxxx | 10xxxxxx |
-```
-
-Multi-byte characters have a first byte starting with `110`, `1110` or `11110` for
-two, three or four byte characters. The continuation bytes always start with `10`,
-which clearly informs decoders of its function. All other available bits (marked
-with an `x`) encode the code point value in binary.
-
-Examples:
-
-☃, snowman character, U+2603:
-```text
-Byte 1   | Byte 2   | Byte 3   |
----------|----------|----------|
-1110xxxx | 10xxxxxx | 10xxxxxx |
-<3 B>    | <cont A> | <cont B> |
-
-xxxx0010 | xx011000 | xx000011 |
-    < 2>     < 6><      0>< 3>
-
-UTF-8 encoded:
-11100010 10011000 10000011 == 0xE2 0x96 0x83
-```
-
-🍑, peach, U+1F351
-```text
-Byte 1   | Byte 2   | Byte 3   | Byte 4   |
----------|----------|----------|----------|
-11110xxx | 10xxxxxx | 10xxxxxx | 10xxxxxx |
-<4 B>    | <cont A> | <cont B> | <cont C> |
-
-xxxxx000 | xx011111 | xx001101 | xx010001 |
-     <       1>< F>     < 3><      5>< 1>
-
-UTF-8 encoded:
-11110000 10011111 10001101 10010001 == 0xF0 0x9F 0x8D 0x91
-```
-
-Doing those conversions manually make it clear that the UTF-8 encoding results
-in a hexadecimal number that is completely different from the hexadecimal value
-of the code point: `U+2603` becomes `0xE2 0x96 0x83`.
-
-So UTF-8 is "storage smart" because it is smart about the amount of bytes that
-it takes to store a character. However, it is not so "processing" smart. In
-order to figure out the length of a string, it is necessary to traverse the
-entire string, resulting in a linear growth rate (O(n)).
-
-
-## UTF-16
-
-In the early days of Unicode a 2 byte encoding called UCS-2 was proposed. This
-allowed for 65 536 code points to be encoded, which is enough for plane 0, the
-Basic Multiligual Plane, or BMP. This is good, but not complete. Luckily there
-were a few unused ranges that could be used in a smart way so that more than
-one million code points could be representedl, and that gives birth to UTF-16.
-
-UCS-2 did not use the range `0xD800` to `0xDFFF` (55 296 to 57 343, in
-decimal), which means that a total of 2048 values were not used. These
-available values could be arranged in pairs, called surrogate pairs, resulting
-in 4 bytes per code point. The first 1024 available values always formed the
-first 16-bit part and the last 1024 formed the 16-bit part. As a result a total
-of 1 048 576 extra code points can be represented.
-
-The result is something like this:
-- Code points from `0x0` to `0xFFFF` are encoded by their actual values.
-- Starting from `0x10000` (which is the next number after `0xFFFF`) the code
-  point is represented by a surrogate pair.
-- The range `0xD800` to `0xDBFF` is called the "high surrogate".
-- The range `0xDC00` to `0xDFFF` is called the "low surrogate".
-- Get the code point that needs to be represented by a surrogate pair and
-  subtract 0x10000.
-- The highest code point number possible, in decimal, is 1 112 064. That, minus
-  `0x10000` (65 536, in decimal) is 1 046 528. Juuuust enough! This can be
-  represented in 20 bits (2 ^ 20 = 1 048 576).
-- The first 10 bits are added to the high surrogate, and the last 10 bits are
-  added to the low surrogate.
-- The high and the low 10-bit values are in the range `0x000`–`0x3FF`.
-
-
-☃, snowman character, U+2603:
-U+2603 < U+FFFF, hence, simply use the code point number
-0x26 0x03
-
-🍑, peach, U+1F351
-U+1F351 > U+FFFF, hence, a surrogate pair is needed.
-```
-0x1F351 - 0x10000 = 0xF351
-
-Split 0xF351 in 2 groups of 10 bits
-0x0F351=        00 0011 1100        11 0101 0001
-0xD800 = 1101 0100 0000 0000
-0xDC00 =                     1101 1100 0000 0000
-         1101 0100 0011 1100 1101 1111 0101 0001 = 0xD83C 0xDF51
-```
-
-
 ## UTF-32
 
 Tired of clever encodings? Ready to waste a lot of space with zeroes?
@@ -389,6 +251,7 @@ Then UTF-32 is for you. Well, sort of.
 
 In a lower level program written in C, when we convert an emoji character, for
 example, back into its Unicode code point 
+
 
 ## BOM – Byte Order Mark
 
