@@ -1,5 +1,26 @@
 # Git cheatsheet
 
+## Lingo
+
+- `<repository>` or `<remote>`: defined under `.git/config`
+  ```
+  [remote "origin"]
+    url = https://github.com/schacon/simplegit-progit
+    fetch = +refs/heads/*:refs/remotes/origin/*  # This is a <refspec> :)
+  ```
+- `<refspec>`: `[+]<src>:<dst>`
+  `+`: allow non-fast forward.
+  `<src>`: is can be any SHA-1 expression
+- `<refname>`:
+  master, heads/master, refs/heads/master
+  origin/master, remotes/origin/master, refs/remotes/origin/master
+  refs: heads (branches), tags, remotes
+- `SHA-1 expression`: `master~4`, or `HEAD`. See gitrevisions(7)
+- `<describeOutput>`:
+
+
+## Inner workings
+
 ```ascii
 Working                     Staging                     Repository
 directory

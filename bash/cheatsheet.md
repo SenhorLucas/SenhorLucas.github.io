@@ -157,5 +157,40 @@ log_done() { _log_task "$ICON_DONE" "Done"; }
 ```
 
 
+CLI parsing
+-----------
 
+### Usage
+```bash
+usage() {
+    cat <<-USAGE
+	Short description.
 
+	Usage: ${0##*/} [-h][-f] {cmd1|cmd2}
+
+	Commands:
+	  cmd1       Some command
+	  cmd2       Some command
+
+	Configuration:
+	  Environemt variable 1:
+	    ${ENV_VAR1[*]}
+	USAGE
+}
+```
+
+### Without argparse
+```bash
+main() {
+    trap exit_trap INT TERM EXIT
+    local -r cmd=$1
+    if (($# != 1)); then log_error 'invalid usage'; usage; exit 2; fi
+    case "$cmd" in
+        build )     cmd_build;;
+        test )      cmd_test;;
+        * )         log_error "invalid command \`$cmd\`"; usage; exit 2;;
+    esac
+}
+
+main "$@"
+```
