@@ -194,3 +194,15 @@ main() {
 
 main "$@"
 ```
+
+
+Looping
+-------
+
+### Looping over an array
+
+```bash
+array=(1 2 3)
+for i in "${array[@]}"; do
+done
+```
