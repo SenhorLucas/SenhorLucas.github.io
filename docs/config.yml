@@ -1,0 +1,115 @@
+baseURL: "https://lucas-viana.com"
+languageCode: "en-us"
+title: "Lucas Viana's ruminations"
+theme: "papermod"
+params:
+  env: production
+  author: Lucas Viana
+  description: A bunch of things that I've written mainly for myself
+  ShowShareButtons: true
+  ShowReadingTime: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  ShowToc: true
+  # comments: false
+  # images: ["someimage.jpg"]
+  # profileMode:
+  #   enabled: false
+  #   title: PaperMod
+  #   imageUrl: "#"
+  #   imageTitle: my image
+  #   # imageWidth: 120
+  #   # imageHeight: 120
+  #   buttons:
+  #     - name: Archives
+  #       url: archives
+  #     - name: Tags
+  #       url: tags
+  socialIcons:
+    - name: github
+      url: "https://github.com/SenhorLucas"
+
+  homeInfoParams:
+    Title: "Lucas Viana's developer blog"
+    Content: >
+      Welcome to my blog.
+      If you like something I've written, it would make my day to hear about
+      it. If you dislike it, hit the dislike button below.
+
+  editPost:
+    URL: "https://github.com/senhorlucas/senhorlucas.github.io/tree/main/docs/content"
+    Text: "Suggest Changes"
+    appendFilePath: true
+
+
+      # Configuratoin that I still need to go through before activating.
+      # https://github.com/adityatelange/hugo-PaperMod/blob/exampleSite/config.yml
+      #
+      #     # label:
+      #     #     text: "Home"
+      #     #     icon: icon.png
+      #     #     iconHeight: 35
+      # 
+      #     # analytics:
+      #     #     google:
+      #     #         SiteVerificationTag: "XYZabc"
+      # 
+      #     assets:
+      #         disableHLJS: true
+      #     #     favicon: "<link / abs url>"
+      #     #     favicon16x16: "<link / abs url>"
+      #     #     favicon32x32: "<link / abs url>"
+      #     #     apple_touch_icon: "<link / abs url>"
+      #     #     safari_pinned_tab: "<link / abs url>"
+      # 
+      #     # cover:
+      #     #     hidden: true # hide everywhere but not in structured data
+      #     #     hiddenInList: true # hide on list pages and home
+      #     #     hiddenInSingle: true # hide on single page
+      # 
+      #     # fuseOpts:
+      #     #     isCaseSensitive: false
+      #     #     shouldSort: true
+      #     #     location: 0
+      #     #     distance: 1000
+      #     #     threshold: 0.4
+      #     #     minMatchCharLength: 0
+      #     #     keys: ["title", "permalink", "summary", "content"]
+      # 
+      # markup:
+      #     goldmark:
+      #         renderer:
+      #             unsafe: true
+      #     highlight:
+      #         noClasses: false
+      #         # anchorLineNos: true
+      #         # codeFences: true
+      #         # guessSyntax: true
+      #         # lineNos: true
+      #         # style: monokai
+      # 
+      # privacy:
+      #     vimeo:
+      #         disabled: false
+      #         simple: true
+      # 
+      #     twitter:
+      #         disabled: false
+      #         enableDNT: true
+      #         simple: true
+      # 
+      #     instagram:
+      #         disabled: false
+      #         simple: true
+      # 
+      #     youtube:
+      #         disabled: false
+      #         privacyEnhanced: true
+      # 
+      # services:
+      #     instagram:
+      #         disableInlineCSS: true
+      #     twitter:
+      #         disableInlineCSS: true

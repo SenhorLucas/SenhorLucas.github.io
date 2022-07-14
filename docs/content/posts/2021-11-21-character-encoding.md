@@ -1,7 +1,10 @@
 ---
+author: "Lucas Viana"
 title: "Character encodings: ASCII, UTF-8, Unicode and what is Latin-1?"
-date: 2021-11-03 16:36:48 +0100
-categories: encoding engineering computer-science
+date: 2021-11-03T16:36:48+01:00
+tags: ["encoding", "engineering", "computer-science"]
+showToc: true
+draft: false
 ---
 
 What is Unicode, why is it used everywhere, and what are the options?

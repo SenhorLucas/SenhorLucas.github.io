@@ -1,103 +1,94 @@
 ---
-title: "Learn `sed` and be happy"
-date: 2022-07-05 16:36:48 +0100
-categories: GNU sed command-line tools coreutils
+author: "Lucas Viana"
+title: "`sed` cheatsheet"
+date: 2022-07-05T16:36:48+01:00
+tags: ["GNU", "sed", "command-line", "tools", "coreutils"]
+showToc: true
+draft: true
 ---
-When you're doing reading this article, you'll be ready to become a `sed`
-expert. So let's hit the ground running.
 
-The `sed` command is `CTRL+R` on super steroyds. It does simple search and
-replace (regex based), delete lines, add lines or even reverse the
-lines of a file.
+## Examples
 
-Those that have used `sed` before might be familiar with this command, which
-replaces a regular expression (hello) by a replacement word (world)
-
-    $ echo 'hello world' | sed 's/hello/world/'
-    world world
-
-Or removing all lines that start with a `#` (in a horrendous way!):
-
-    $ cat input.txt | sed 's/^#//'
-
-Fine, this does what you want. But people stop at this. Most end up forgetting
-that `sed` can do so much more. As a result, `s` is the only command that people
-know, and, even worse, they don't even know that `s` is one of many commands
-that `sed` provides. It's like owning a Ferrari but never taking it to the
-racetrack.
-
-So let's take a step back and look at the anatomy of a `sed` expression.
+## `sed` step by step execution
 
 
-## Expressions
+1. Read line from the input stream. A line is a sequence of characters ended by
+   a newline `\n`.
+2. Remove the trailing newline.
+3. Store the line in the _pattern_ space.
+4. Check if the line matches the `address`.
+5. If matched, run the commands. The commands may change the contents of the
+   _pattern_ and the _hold_ spaces.
+6. Print out the content of the _pattern_ space.
+7. Delete content of _pattern_ space, but keep the _hold_ space untouched.
+8. Repeat.
 
-`sed` expressions take the following form:
+## Command structure
+
+`sed` is called with a *script* to process a stream.  The script is made of
+*expressions*, and each *expression* has an *address*, a *command* and
+*options*.
+
+### Calling `sed`
+General structure
+
+    [other command] | sed [options] script [input-file]
+
+Examples:
+
+    echo 'hello world' | sed -e 's/d/d!/' -e 's/^h/H/'
+
+TODO
+
+### Script structure
+
+Semi-colon or new-line separated expressions:
+
+    'expression; expression
+    expression'
+
+Called with `-e` or `-f`:
+
+    -e 'expression; expression' -e 'expression'
+    -f myscript.sed
+
+### Expression structure
 
     [address]command[options]
 
-- `address`: An optional filter which lines to apply the `command` to.
-- `command`: a mandatory _single letter_ to specify what to do to the selected
-  lines.
-- `options`: Optional. Each command has its own options, which can look quite
-  different.
+- `address`: filter lines to apply command on
+- `command`: single letter command (e.g. `s`)
+- `options`: command specific options
 
-Looking back at our initial example:
 
-```
-  ` s/hello/world/g`
-   ^^\____________/
-   ||      ^
-   ||      |
-   ||      +- Options of command `s`
-   |+- Signle letter command `s` that means substitute
-   +- Address: No address given, fine, it's optional
+### The `s` command
+Example:
+```text
+    s/\(hello \)\(world \)/\2\1/
+          |        |        | |
+          |        |        | +-> \1: reference to group 1
+          |        |        +---> \2: referebce to group 2
+          |        +------------> \(world\): group 2
+          +---------------------> \(hello\): group 1
 ```
 
-Here we can see that the `s/hello/world` expression ommits the `address`, uses
-the `s` command with `/hello/world` as `options`.
-
-What the heck is an `address` though?
-
-
-## Address
-
-The address itself has its own general syntax:
+### address
+Addresses select which lines the expression to. Can be either `/regex/` or
+`nr`.
 
     addr1[,addr2][!]
 
-Where `addr` can be either a line number or a regular expression, and the
-optional `!` (bang) reverses the meaning ;)
+- `addr1`: if match, apply command to the current line
+- `addr2`: if present, select lines between `addr1` and `addr2`
+- `!`: Invert address selection result
 
-Examples using line numbers:
+Examples:
 
-- `1`: Matches only line number 1
-- `54`: Matches only line number 54
-- `1,5`: Matches lines from 1 to 5 (included)
-- `1,5!`: Match all lines that are not from 1 to 5
-
-Examples using regular expressions:
-
-- `/abc/`: Matches lines containing "abc".
-- `\ra*r`: Matches lines containing "abc". Instead of marking the
-    regular expression with `/<regex>/` it uses `\r<regex>r`, where `r` can be
-    any character.
-- `/abc/!`: Matches lines that do not contain "abc".
-
-Mixed examples:
-- `/abc/,2`: Matches a line containing "abc" and the next 2 lines
-- `2,/abc/`: Matches the second line until a line containing "abc"
-
-### Pimp up the `s` command with addresses
-
-Now you should know what this will do:
-
-    sed '2,4s/hello/world'
-
-Yep, it will substitute "hello" by "world" from lines 2 to 4. You can go bananas
-combining the addresses, with the `s` command.
-
-Tip: use the `!` for extra points with your peers -- this is _barely_
-documented. I don't know why the `man` pages don't make it clearly. Ugh!
+address     | meaning
+------------|--------
+1,2d        | delete lines 1 and 2
+55d         | delete line 55
+/[a-z]/p    | print lines that contain lower-case characters
 
 
 ## Command
@@ -108,7 +99,6 @@ to try out:
 
 ### `s`
 
-    s/regex/replacement/flags
 
 This is the most useful and most known `sed` command. It is also the one with
 the most options.
