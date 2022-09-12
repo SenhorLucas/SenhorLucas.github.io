@@ -12,10 +12,10 @@ Parameters
 
 ### Substitutions
 
-`${FOO%suffix}`			Remove suffix
-`${FOO#prefix}`			Remove prefix
-`${FOO%%suffix}`		Remove long suffix
-`${FOO##prefix}`		Remove long prefix
+`${FOO%pattern}`		Remove shortest possible suffix
+`${FOO%%pattern}`		Remove longest possible suffix
+`${FOO#pattern}`		Remove prefix
+`${FOO##pattern}`		Remove long prefix
 `${FOO/from/to}`		Replace first match
 `${FOO//from/to}`		Replace all
 `${FOO/%from/to}`		Replace suffix
@@ -72,7 +72,7 @@ Operations that are true if the string:
 `-z STRING`: is empty (its length is zero).
 `-n STRING`: is not empty (its length is not zero).
 
-`STRING = STRING`: is identical to the second.
+`STRING = STRING`: is identical to the second. Bash allows using `==` to try to be nice.
 `STRING != STRING`: is not identical to the second.
 `STRING < STRING`: sorts before the second.
 `STRING > STRING`: sorts after the second.
