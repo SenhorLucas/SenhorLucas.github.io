@@ -1,12 +1,12 @@
 # Artifactory
 
-Content taken from:
-https://www.jfrog.com/confluence/display/JFROG/Artifactory+Query+Language
-https://www.jfrog.com/confluence/display/JFROG/Artifactory+REST+API
-
-
 AQL
 ---
+[AQL] sure has its fair share of quirks. The specification clarifies some of the
+issues, but not all of it.
+
+I only use AQL to deal with _items_, so for the moment I cannot say much about
+how one should deal with _builds_ and _entries_.
 
 ### Syntax
 
@@ -20,14 +20,19 @@ AQL
 ```
 
 ### Field criteria
-```
-{"<field>" : {"<comparison operator>" : "<value>"}}
-```
+
+    {"<field>" : {"<comparison operator>" : "<value>"}}
+
+If the [comparison operator](#comparison-operators) is `$eq` (the most common
+case), the field criterion can be simplified to:
+
+    {"<field>" : "<value>"}
+
+Much nicer.
 
 ### Properties criteria
-```
-{"@<property_key>":{"operator":"<property_value>"}}
-```
+
+    {"@<property_key>":{"operator":"<property_value>"}}
 
 ### Compounding criteria
 ```
@@ -52,6 +57,8 @@ e.g.
 `$match`  | Matches. Accepts `*` and `?` wildcards.
 `$nmatch` | Does not match. Accepts `*` and `?` wildcards.
 
+
+Lte me mke som terryble mistake here.
 
 ### Examples
 1. Find items that have any property with a value of "GPL"
@@ -84,3 +91,6 @@ The RESTful API
 
 User name + password (or API key). Or dedicated header `X-JFrog-Art-Api`.
 
+
+[AQL]: https://www.jfrog.com/confluence/display/JFROG/Artifactory+Query+Language
+[Artifactory REST API]: https://www.jfrog.com/confluence/display/JFROG/Artifactory+REST+API
