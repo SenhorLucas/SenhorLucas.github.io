@@ -1,3 +1,13 @@
+---
+date: 2022-07-05T16:36:48+01:00
+draft: false
+tags: ["GNU", "sed", "command-line", "tools", "coreutils"]
+title: "Learn `sed` and be happy"
+---
+When you're done reading this article, you'll be ready to become a `sed`
+expert. Yes, you read it right -- So let's hit the ground running.
+
+
 What is `sed`?
 --------------
 
@@ -9,7 +19,8 @@ changed the contents of a file. You can see it as `CTRL+R` on super steroyds.
 `sed` is capable of doing simple search and replace (regex based), delete lines,
 add lines or even reverse the lines of a file.
 
-I've been using the word "file" here, and that includes `stdin`.
+FYI: I've been using the word "file" here, and that includes `stdin` and
+`stderr`.
 
 
 The simples usage

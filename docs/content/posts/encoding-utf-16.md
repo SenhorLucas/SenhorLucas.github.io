@@ -1,10 +1,8 @@
 ---
-author: "Lucas Viana"
-title: "The down and dirty of UTF-16"
 date: 2021-11-03T16:36:48+0100
-tags: ["encoding", "engineering", "computer-science"]
-showToc: true
 draft: false
+tags: ["encoding", "engineering", "computer-science"]
+title: "The down and dirty of UTF-16"
 ---
 
 This is part 3 of a series of posts on Unicode and encodings:

@@ -1,10 +1,8 @@
 ---
-author: "Lucas Viana"
-title: "Character encodings: ASCII, UTF-8, Unicode and what is Latin-1?"
 date: 2021-11-03T16:36:48+01:00
-tags: ["encoding", "engineering", "computer-science"]
-showToc: true
 draft: false
+tags: ["encoding", "engineering", "computer-science"]
+title: "Unicode, ASCII, UTF-8 and... Latin-1?"
 ---
 
 What is Unicode, why is it used everywhere, and what are the options?
@@ -354,9 +352,4 @@ Tired of clever encodings? Ready to waste a lot of space with zeroes?
 Then UTF-32 is for you. Well, sort of.
 
 In a lower level program written in C, when we convert an emoji character, for
-example, back into its Unicode code point 
-
-
-## BOM – Byte Order Mark
-
-TODO
+example, back into its Unicode code point.
