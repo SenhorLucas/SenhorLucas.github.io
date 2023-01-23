@@ -2,14 +2,14 @@
 date: 2021-11-03T16:36:48+0100
 draft: false
 tags: ["encoding", "engineering", "computer-science"]
-title: "The down and dirty of UTF-16"
+title: "Encodings part 3: The down and dirty of UTF-16"
 ---
 
 This is part 3 of a series of posts on Unicode and encodings:
 
-- Part 1: What the heck is Unicode
-- Part 2: The down and dirty of UTF-8
-- Part 3: The down and dirty of UTF-16
+- [Encodings Part 1: Unicode, ASCII, UTF-8 and... Latin-1?]
+- [Encodings Part 2: The down and dirty of UTF-8]
+- [Encodings Part 3: The down and dirty of UTF-16]
 
 A very short background
 -----------------------
@@ -156,6 +156,9 @@ stuff `FFFE` at the beginning of a file or stream to indicate that it is
 little-endian encoded, and `FEFF` to indicate big-endian encoding. There is
 not much more to it than that.
 
-****
+
 [Unicode and ISO merged]: http://www.unicode.org/versions/Unicode1.0.0/V2ch01.pdf
 [Byte Order Mark]: https://en.wikipedia.org/wiki/Byte_order_mark
+[Encodings Part 1: Unicode, ASCII, UTF-8 and... Latin-1?]: {{< ref "encoding.md" >}}
+[Encodings Part 2: The down and dirty of UTF-8]: {{< ref "encoding-utf-8.md" >}}
+[Encodings Part 3: The down and dirty of UTF-16]: {{< ref "encoding-utf-16.md" >}}

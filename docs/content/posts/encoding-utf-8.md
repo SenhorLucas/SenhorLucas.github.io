@@ -2,21 +2,27 @@
 date: 2021-11-03T16:36:48+01:00
 draft: false
 tags: ["encoding", "engineering", "computer-science"]
-title: "The down and dirty of UTF-8"
+title: "Encodings part 2: The down and dirty of UTF-8"
 ---
 
-What the double UTF is UTF-8? Let's lay it down, bit-by-bit.
+What the double UTF is UTF-8? Let's decode this, bit-by-bit.
+
+This is part 2 of a series of posts on Unicode and encodings:
+
+- [Encodings Part 1: Unicode, ASCII, UTF-8 and... Latin-1?]
+- [Encodings Part 2: The down and dirty of UTF-8]
+- [Encodings Part 3: The down and dirty of UTF-16]
 
 
-## Unicode and UTF-8
+Unicode and UTF-8
+-----------------
 
-In my [previous post]({% post_url 2021-11-21-character-encoding %}), we dug a
-little deeper into the reasons to be for Unicode and found out that Unicode is
-an immense character table containing all the characters in the world. Or at
-least a valiant attempt at that. This table has 1 112 064 rows, and each
-row is a **code point** (i.e., a number), but "only" 144 697 of the code points have
-been assigned so far. Each code point
-[represents a character/symbol](http://www.unexpected-vortices.com/misc-notes/text-unicode/terminology.html).
+In part 1, we dug a little deeper into the reasons to be for Unicode and found
+out that Unicode is an immense character table containing all the characters in
+the world. Or at least a valiant attempt at that. This table has 1 112 064 rows,
+and each row is a **code point** (i.e., a number), but "only" 144 697 of the
+code points have been assigned so far. Each code point [represents a
+character/symbol](http://www.unexpected-vortices.com/misc-notes/text-unicode/terminology.html).
 
 Now let's get the highest code point on this table and convert it to binary:
 
@@ -52,10 +58,10 @@ whereas ASCII would use only 11. That is 400% larger! Remember that we are
 talking about the end of the 80s when hard drives were a lot more expensive.
 If Unicode was to supplant ASCII, a storage-efficient encoding was needed.
 
+UTF-8
+-----
 
-## UTF-8
-
-And with storage efficiency in mind UTF-8 was born.
+And with storage efficiency in mind, UTF-8 was born.
 
 The stroke of genius was to separate the character table (Unicode) from the
 encoding. The creators of UTF-8 zoomed into each bit of every byte and assigned
@@ -87,18 +93,21 @@ Multi-byte characters have the first byte be with `110`, `1110`, or
 bytes always begin with `10`. All other available bits (marked with an `x`)
 encode the code point value in binary.
 
+(Oh boy, the images disappeared, soon to be fixed!)
 ![UTF-8 control bytes](/resources/UTF-8/UTF-8.png){:class="img-responsive"}
 
 Examples:
 
-The snowman character ☃ is code point U+2603. When encoded as UTF-8 it is
-becomes  `0xE2 96 83`.
+The snowman character ☃ is code point U+2603. When encoded as UTF-8 it becomes
+`0xE2 96 83`.
 
+(Oh boy, the images disappeared, soon to be fixed!)
 ![UTF-8 Snowman](/resources/UTF-8/Snowman-UTF-8.png){:class="img-responsive"}
 
 The peach character 🍑 is code point U+1F351. Its UTF-8 encoded representation
 is `0xF0 9F 8D 91`:
 
+(Oh boy, the images disappeared, soon to be fixed!)
 ![UTF-8 Peach](/resources/UTF-8/Peach-UTF-8.png){:class="img-responsive"}
 
 Doing these conversions by hand makes it clear that the UTF-8 encoding results
@@ -111,7 +120,8 @@ Calculating the length of a string requires completely traversing it, resulting
 in a linear growth rate (O(n)).
 
 
-## BOM – Byte Order Mark
+BOM – Byte Order Mark
+---------------------
 
 UTF-8 does not need a BOM due to its variable character length. However,
 Windows (ah, Windows) wants to add  `0xEF BB 0xBF` to the beginning of UTF-8
@@ -119,8 +129,9 @@ encoded files. Mac and Linux do not do that. So sending a file over to your
 boss (why do bosses always use Windows?) and receiving it back in your Linux
 computer will add some garbage to the beginning of your file. And that might
 cause you problems if you are not aware. And if that garbage looks like ï»¿
-you might want to read my 
-[general article about character encodings]({% post_url 2021-11-21-character-encoding %}).
+you might want to read part 1 of this series.
 
-Also make sure to read up on [UTF-16]({% post_url 2021-12-25-utf16 %}) to
-make sure you're fully versed in Unicode Transformation Formats.
+
+[Encodings Part 1: Unicode, ASCII, UTF-8 and... Latin-1?]: {{< ref "encoding.md" >}}
+[Encodings Part 2: The down and dirty of UTF-8]: {{< ref "encoding-utf-8.md" >}}
+[Encodings Part 3: The down and dirty of UTF-16]: {{< ref "encoding-utf-16.md" >}}
