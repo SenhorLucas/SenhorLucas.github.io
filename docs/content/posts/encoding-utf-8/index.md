@@ -93,8 +93,7 @@ Multi-byte characters have the first byte be with `110`, `1110`, or
 bytes always begin with `10`. All other available bits (marked with an `x`)
 encode the code point value in binary.
 
-(Oh boy, the images disappeared, soon to be fixed!)
-![UTF-8 control bytes](/resources/UTF-8/UTF-8.png){:class="img-responsive"}
+![UTF-8 control bytes](UTF-8.png)
 
 Examples:
 
@@ -102,13 +101,13 @@ The snowman character ☃ is code point U+2603. When encoded as UTF-8 it becomes
 `0xE2 96 83`.
 
 (Oh boy, the images disappeared, soon to be fixed!)
-![UTF-8 Snowman](/resources/UTF-8/Snowman-UTF-8.png){:class="img-responsive"}
+![UTF-8 Snowman](Snowman-UTF-8.png)
 
 The peach character 🍑 is code point U+1F351. Its UTF-8 encoded representation
 is `0xF0 9F 8D 91`:
 
 (Oh boy, the images disappeared, soon to be fixed!)
-![UTF-8 Peach](/resources/UTF-8/Peach-UTF-8.png){:class="img-responsive"}
+![UTF-8 Peach](Peach-UTF-8.png)
 
 Doing these conversions by hand makes it clear that the UTF-8 encoding results
 in a hexadecimal number that is completely different from the hexadecimal value
@@ -118,7 +117,6 @@ So UTF-8 is "storage efficient" because it is clever about the number of bytes
 it takes to store a character. However, it is not so "processing smart."
 Calculating the length of a string requires completely traversing it, resulting
 in a linear growth rate (O(n)).
-
 
 BOM – Byte Order Mark
 ---------------------

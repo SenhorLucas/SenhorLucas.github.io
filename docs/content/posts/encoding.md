@@ -3,7 +3,7 @@ date: 2021-11-03T16:36:48+01:00
 description: An introduction to how computers deal with human characters.
 draft: false
 tags: ["encoding", "engineering", "computer-science"]
-title: "Unicode, ASCII, UTF-8 and... Latin-1?"
+title: "Encodings part 1: Unicode, ASCII, UTF-8 and... Latin-1?"
 ---
 What is Unicode, why is it used everywhere, and what are the options?
 
@@ -97,7 +97,7 @@ Dec | Char
   2 | STX (start of text)
   3 | ETX (end of text)
   4 | EOT (end of transmission)
-  5 | ENQ (enquiry)
+  5 | ENQ (inquiry)
   6 | ACK (acknowledge)
   7 | BEL (bell)
   8 | BS  (backspace)
@@ -249,7 +249,7 @@ with Latin1, other **slightly similar** encodings were created:
 - ISO 8859-15 (a.k.a. Latin0, Latin9)
 - Windows 1252
 - MCS
-- And many more (for e.g. Cyrillic and Greek alphabets).
+- And many more (e.g. Cyrillic and Greek alphabets).
 
 All these encodings strived to keep compatibility with ASCII from 0 to 127.
 However, from 128 to 255 one could only guess. Some favored the mathematical
@@ -261,8 +261,8 @@ of those. It included: the oh-so-important € sign; the Ÿ which allows round-t
 capitalization of French text without loss; the more finicky curly quotes (“),
 which made encoding mismatches a big pain to read because those would be turned
 into question marks indicating an encoding error and would be sprinkled all over
-curly-eager text. As a result, text editors started decoding Latin1 text with
-Windows 1252 "just in case". What a mess!
+curly-quote-eager text. As a result, text editors started decoding Latin1 text
+with Windows 1252 "just in case". What a mess!
 
 But wait, it does not stop there. There are also Windows Code Pages, which allow
 representing characters from many other languages. Each code page is, in fact, a
@@ -340,8 +340,8 @@ most common Chinese, Japanese and Korean characters in a group called CJK.  But
 it does not include all CJK characters. Those need entire planes, keep reading.
 
 Plane 1 is the SMP: Supplementary Multilingual Plane. It contains the oh-so-
-loved emojis, some historic characters, mathematical and music symbols. You get
-the point.
+loved emojis, some historic characters, mathematical and musical symbols. You
+get the point.
 
 Planes 2 and 3 contain many of the Chinese, Japanese and Korean ideographic
 characters. There is a bit of controversy in this subject because the Unicode
@@ -352,7 +352,7 @@ code points which, in UTF-8 consume more bytes, being less space-efficient. So
 now you know that all of this does not come controversy-free.
 
 Plane 14, to keep things spicy, has some "variation selectors" that can be used
-to differentiate characters in planes 2 and 3. I found quite hard to find a
+to differentiate characters in planes 2 and 3. I found it quite hard to find a
 practical example of this, so I'll stop spending time on it now and hope someone
 reading this will send me a nifty example 😁. Moving on…
 
