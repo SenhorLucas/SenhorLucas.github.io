@@ -21,21 +21,28 @@ how one should deal with _builds_ and _entries_.
 
 ### Field criteria
 
-    {"<field>" : {"<comparison operator>" : "<value>"}}
+```aql
+{"<field>" : {"<comparison operator>" : "<value>"}}
+```
 
 If the [comparison operator](#comparison-operators) is `$eq` (the most common
 case), the field criterion can be simplified to:
 
+```aql
     {"<field>" : "<value>"}
+```
 
 Much nicer.
 
 ### Properties criteria
 
-    {"@<property_key>":{"operator":"<property_value>"}}
+```aql
+{"@<property_key>":{"operator":"<property_value>"}}
+```
 
 ### Compounding criteria
-```
+
+```aql
 {<"$and"|"$or">:[{<criterion>},{<criterion>}]
 
 e.g.
