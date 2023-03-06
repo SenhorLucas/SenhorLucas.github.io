@@ -205,7 +205,7 @@ $0                  $1   $2
 script -ab -c value pos1 pos2
 ```
 
-## Parsign manually
+## Parsing manually
 
 Using `getopts` is pretty convenient, but also limiting since it does not
 support long-form options and options with an optional value.
