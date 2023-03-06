@@ -10,7 +10,7 @@ params:
   ShowReadingTime: true
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
-  ShowCodeCopyButtons: false
+  ShowCodeCopyButtons: true
   ShowRssButtonInSectionTermList: true
   ShowToc: true
   # comments: false
