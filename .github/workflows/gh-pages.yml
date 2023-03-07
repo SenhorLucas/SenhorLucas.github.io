@@ -46,6 +46,7 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
+
       # This site has nothing to do with Node.js -- yet.
       # - name: Install Node.js dependencies
       #   run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
@@ -61,6 +62,7 @@ jobs:
             --baseURL "${{ steps.pages.outputs.base_url }}/" \
             --source docs \
             --destination ../public
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
