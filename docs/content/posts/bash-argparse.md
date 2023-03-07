@@ -5,17 +5,25 @@ draft: false
 title: "Parsing command line arguments in Bash"
 ---
 
-If you don't have a CLI option parser in your scripts, you don't have scripts,
-you have childish cake recipes.
+If you don't have a CLI option parser in your scripts, you're probably being
+inneficient.
 
 As a software developer, you are the product of the systems you've built to
-assist you in your thinking. I've heard the following phrase somewhere, so I
-won't take credit:
+assist you in your thinking:
 
 > We should minize the time spent getting in position to think.
 
-Then we should be writing scripts that are capable of handling our use-cases
-efficiently, without the constant need for us to go in and hack it up further.
+Instead of wasting time, we should be building systems. Those systems must get
+better and better as time goes by. Without option parsing, our scripts will
+crumble as soon is it reaches a small amount of complexity.
+
+In other words, to handle the complexity that we create and need, proper systems
+are required. As Dijkstra said:
+
+> The computing scientist's main challenge is not to get confused by the
+> complexities of his own making.
+
+So, yeah, back to the basics. Ready?
 
 ## The goal
 
