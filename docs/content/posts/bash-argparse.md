@@ -25,7 +25,9 @@ are required. As Dijkstra said:
 
 So, yeah, back to the basics. Ready?
 
-## The goal
+## What is is?
+
+### The goal
 
 We want to write our Bash scripts so we can invoke them with a multitude of
 input options, so the script does the work without us needing to open it in the
@@ -33,8 +35,6 @@ editor.
 
 We also want scritps that we can simply `./call-it --help`. And quickly be
 reminded of the syntax to invoke it.
-
-## Parsing arguments
 
 There are multiple ways of whipping together a command line argument parser for
 shell scripts. None is quite on par with Python's `argparse` but that doesn't
@@ -46,7 +46,7 @@ All we want is to create user-friendly Bash scripts that can be run like this:
 $ my-awedome-script -a --fast --file myfile.txt execute
 ```
 
-## General form
+### General form
 
 From a bird's eye perspective, scripts have this general form:
 
@@ -62,7 +62,7 @@ In other words, optional arguments need to be given with some kind of name, or
 pre-defined identifier preceeded by one or two hyphens, whereas positional
 arguments get their meaning from the order in which they appear.
 
-## The world is messier, though
+### The world is messier, though
 
 The world is much messier than that. Consider the following.
 
@@ -91,7 +91,9 @@ combined, but not preceeded by a hyphen. We will hapilly ignore this form,
 unless, of course, we are running `ps`. Be advised, though that `ps` does
 support the more usual hyphenated form, if you prefer.
 
-## Positional arguments: pretty easy
+## Positional vs optional arguments
+
+### Positional arguments: pretty easy
 
 Positional arguments are those that take their meaning from the order in which
 they appear when calling a script, for example:
@@ -115,7 +117,7 @@ arg3=$3
 ...
 ```
 
-## Optional arguments: the hard part
+### Optional arguments: the hard part
 
 Due to the wild variety of ways available for passing optional arguments to a
 script, implementing a parser can be as complex as you wish.
@@ -135,7 +137,9 @@ to get us started:
 
 From now we slowly introduce ways of dealing with the above options.
 
-## `getopts`
+## 3 ways of doing it
+
+### `getopts`
 
 This is probably the best cost/benefit parsing tool available to Bash scripts.
 
@@ -213,7 +217,7 @@ $0                  $1   $2
 script -ab -c value pos1 pos2
 ```
 
-## Parsing manually
+### Parsing manually
 
 Using `getopts` is pretty convenient, but also limiting since it does not
 support long-form options and options with an optional value.
@@ -260,7 +264,7 @@ done
 [[ $create ]] || echo '`--create` argument is mandatory' && exit 1
 ```
 
-## `git rev-parse`
+### `git rev-parse`
 
 An obscure, cryptically documented[^1], inaptly named, yet _good_ complementary
 tool, is `git-rev-parse`. It does not do the entire job though. It only looks
@@ -302,8 +306,7 @@ The above demonstrates that things are done in 4 steps:
 
 Let's examine each step carefully.
 
-
-### 1. Option format specification
+#### 1. Option format specification
 
 This command expects a "option format specification" in the standard input, and
 the syntax for it is pretty straight forward, from the documentation:
@@ -327,7 +330,7 @@ C?        option C with an optional argument
 It starts with a description of the command in free text format. The description
 ends when a line containing `--` is found.
 
-### 2. `git rev-parse --parseopt` Thai massage
+#### 2. `git rev-parse --parseopt` Thai massage
 
 All that `git rev-parse --parseopt` really does is to normalize the input
 argument array. A normilized argument list is very easy to parse because:
@@ -364,7 +367,7 @@ $ script -a -b -c -d -e value1 --bar --baz value2 -- pos1
   _standard error_ andthe error code `129` is reported for _you_ to act upon.
 
 
-### 3. `eval` the output
+#### 3. `eval` the output
 
 The "Thai massaged" output of `git rev-parse --parseopt` is, in fact a string
 that can be `eval`d, and once that is done the argument array is reshuffled.
@@ -384,13 +387,13 @@ arguments | `$0`        | `$1`      | `$2`      | `$3`      | `$4`      | `$5`  
 before    | `myscript`  | `--foo`   | `pos1`    | `--bar`   | `value`   | `pos2`    |
 after     | `myscript`  | `--foo`   | `--bar`   | `value`   | `--`      | `pos1`    | `pos2`
 
-### 4. Now you're ready to start parsing ;)
+#### 4. Now you're ready to start parsing ;)
 
 Now, no matter how messy the input your user passed to the script was, you have
 a nice and massaged argument array to work with. Simply use the manual parsing
 method.
 
-### A fully functional copy/paste example
+#### A fully functional copy/paste example
 
 ```bash
 #!/bin/bash
@@ -464,7 +467,7 @@ main "$@"
 
 ```
 
-## Another tool yet: `parseopt`, oh gosh!
+### Another tool yet: `parseopt`, oh gosh!
 
 The problem with `parseopt` is that there are 2 versions of the same program
 out there, which is incredibly unfortunate.
@@ -492,8 +495,13 @@ system right now. head to `man parseopt` and scroll to the bottom to find the
 location. On Ubuntu 22.04 it is
 `/usr/share/doc/util-linux/examples/getopt-example.bash`.
 
+## Go get them, tiger!
 
+So now you have boilerplate code for most of the scripts you might want to write
+in Bash. Feel free to copy and paste, and, preferrably, mention this article
+somewhere.
 
+I hope this helps you in your journey!
 
 [^1]: Someone has actually contacted the authors of the `git-rev-parse` man page
     asking for improvements to readbility and they answered: "I've read it
