@@ -25,7 +25,7 @@ are required. As Dijkstra said:
 
 So, yeah, back to the basics. Ready?
 
-## What is is?
+## What is it?
 
 ### The goal
 
@@ -495,7 +495,7 @@ system right now. head to `man parseopt` and scroll to the bottom to find the
 location. On Ubuntu 22.04 it is
 `/usr/share/doc/util-linux/examples/getopt-example.bash`.
 
-## Go get them, tiger!
+## That's it for today!
 
 So now you have boilerplate code for most of the scripts you might want to write
 in Bash. Feel free to copy and paste, and, preferrably, mention this article
