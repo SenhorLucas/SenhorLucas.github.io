@@ -1,13 +1,104 @@
 ---
 date: 2023-02-01T11:48:01+01:00
-description: "Blobs are the very core of Git that everyone should know well."
+description: "Welcome to the very core of Git!"
 draft: true
 tags: ["git", "blobs"]
-title: "Git blobs - you don't know Git if you don't know blobs"
+title: "Git blobs and trees explained"
 params:
     ShowCodeCopyButtons: false
     ShowBreadCrumbs: true
 ---
+
+
+## What is a blob?
+
+How do Git remembers every version of every file in you project? Easy. Blobs.
+For each version of every file in your repository, Git created a blob. So what
+is a blob?
+
+The definition is very simple: a blob is a file that lives under `.git/objects`.
+This file is named after the sha1 of the original file, and its content is:
+
+```
+blob <size>\0<content>
+```
+
+That is, the word `blob`, space, the size of the blob in bytes, the null ASCII
+character, and then the content of the original file. Oh, yes, and that file is
+compressed to save space.
+
+Let's put it to the test. We can tell Git to tell us the checksum of a file
+using `git hash-object` like so:
+
+```bash
+$ printf 'hello' | git hash-object --stdin
+b6fc4c620b67d95f953a5c1c1230aaab5db5a1b0
+```
+
+Let's see if we can recreate this sha1 without using Git? Simple:
+
+```bash
+$ printf 'blob 5\0hello' | sha1sum
+b6fc4c620b67d95f953a5c1c1230aaab5db5a1b0
+```
+
+There you go, exactly the same. That shows that Git _really_ creates blobs in
+the format that we expect.
+
+
+### Creating a blob object from scratch, without Git
+
+Creating a blob from scratch is super easy. Just create the string, compress and
+save it to a file. Below, instead of saving it to a file, we do a `hexdump` to
+see exactly what kind of garbled bytes come out on the other end, so we can
+compare it with what Git actually produces.
+
+```bash
+$ printf 'blob 5\0hello' | pigz -z -1 | hexdump
+0000000 0178 ca4b 4fc9 3052 c865 cd48 c9c9 0007
+0000010 aa19 0904
+0000014
+```
+
+To get Git to create a blob for us, all we need to do is `git add`. So below we
+create the original file, with `hello` as content. After `git add`, we can do
+a `hexdump` of the blob, so we can confirm that indeed, Git does exactly what
+we did, and each bit is as we expected.
+
+```bash
+$ printf 'hello' > myfile
+$ git add myfile
+$ hexdump .git/objects/b6/fc4c620b67d95f953a5c1c1230aaab5db5a1b0
+0000000 0178 ca4b 4fc9 3052 c865 cd48 c9c9 0007
+0000010 aa19 0904 
+0000014
+```
+
+Voila! The exact same bits.
+
+
+## Trees
+
+Trees are blobs for directories, so Git can remember where each file lives.
+Just like blobs, trees live under `.git/objects` and they are named after their
+checksum.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```sh
 # Add content to repo
@@ -72,12 +163,6 @@ git read-tree [--prefix=<dir-name>] <hash>
 ```
 
 ```goat
-+-----------+
-| work tree |
-+-----------+
-```
-
-```goat
 .-----------.                 .-------.                     .------------.
 | work tree |                 | index |                     | repository |
 '-+-+-+-+---'                 '-+-+-+-'                     '---+-+-+-+--'
@@ -106,11 +191,21 @@ git read-tree [--prefix=<dir-name>] <hash>
 
 When Git stores a blob in the repository, the blob has the following form:
 
-```
+| 1    | 2                |   3  |   4         |
+|------|------------------|------|-------------|
+| blob | `<content-size>` | `\0` | `<content>` |
+
+
+```text
+# Format
 blob <content-size>\0<content>
-1    2             3 4
+
+# For example
+blob 5\0hello
 ```
+
 Where:
+
 1. The literal word `blob` followed by a white space.
 2. The content size is the number of bytes in the file being stored.
 3. A null byte
@@ -153,3 +248,4 @@ b'blob 5\x00hello'
 ```
 
 That convoluted way of decompressing zlib finally gave us the result we wanted.
+
