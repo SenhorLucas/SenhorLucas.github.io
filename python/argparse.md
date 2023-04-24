@@ -164,7 +164,7 @@ Using negative numbers as an argument name introduces complications.
 >>> subparsers = parser.add_subparsers()    # _SubParsersAction
 >>> parser_a = subparsers.add_parser('a')   # ArgumentParser
 >>> parser_a.add_argument('--foo')
->>> parser.parse_args(['a', '--foo', 'FOO')
+>>> parser.parse_args(['a', '--foo', 'FOO'])
 Namespace(foo='FOO')
 ```
 
