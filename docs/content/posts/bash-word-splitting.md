@@ -199,7 +199,7 @@ in a directory.
 
 No need to `$(ls *.mp3)`, or `$(find -name '*.mp3')`. Those are wasteful because
 they need to create 2 new processes, search through the path, etc. All you need
-is the good old, builtin glob.
+is the good old, built-in glob.
 
 ## When is word splitting good?
 
@@ -211,11 +211,11 @@ Bourne Shell, and still don't exist in strictly POSIX-compliant shells. In these
 shells, to iterate through things some trickery was needed, so they devised word
 splitting.
 
-Nowadays, though, Bash is ubiquitous in Linux systems, and MacOS has Zsh by
+Nowadays, though, Bash is ubiquitous in Linux systems, and macOS has Zsh by
 default, which actually does not apply word splitting to parameter expansions at
-all! And by the way, if you're on MacOS, do yourself a favor and install Bash.
+all! And by the way, if you're on macOS, do yourself a favor and install Bash.
 
-Talking about MacOS, it comes with the (utterly broken version of) `getopt`
+Talking about macOS, it comes with the (utterly broken version of) `getopt`
 argument parsing utility. On its _man_ page, you have this recommendation:
 
 ```bash
